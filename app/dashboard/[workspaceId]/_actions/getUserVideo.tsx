@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma"
 import { currentUser } from "@clerk/nextjs/server"
-
+export type GetUserVideoReturnType = Awaited<ReturnType<typeof getUserVideo>>;
 export const getUserVideo = async () => {
  try {
   const user = await currentUser()
@@ -32,8 +32,8 @@ export const getUserVideo = async () => {
     User: {
      select: {
       id: true,
-      firstname: true,
-      lastname: true,
+      firstName: true,
+      lastName: true,
       image: true
      }
     }
@@ -49,6 +49,7 @@ export const getUserVideo = async () => {
 
   return { status: 200, data: userVideo, message: "Video found" }
  } catch (error) {
+  console.log(error)
   return { status: 403, data: [], message: "Error fetching video" }
  }
 }

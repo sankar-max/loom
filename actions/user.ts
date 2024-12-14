@@ -22,8 +22,8 @@ export const getUser = async () => {
       data: {
         clerkId: user.id,
         email: user.emailAddresses[0].emailAddress,
-        firstname: user.firstName,
-        lastname: user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         image: user.imageUrl,
         studio: {
           create: {},
@@ -44,12 +44,10 @@ export const getUser = async () => {
       },
     })
 
-
     if (newUser) return { status: 201, user: newUser }
 
     return { status: 400, message: 'Internal server error' }
-
-    } catch (error) {
+  } catch (error) {
     console.log(error)
     return { status: 500, message: 'Internal server error' }
   }

@@ -20,6 +20,7 @@ const config = {
     },
     extend: {
       colors: {
+        "loom-primary": "#7320DD",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

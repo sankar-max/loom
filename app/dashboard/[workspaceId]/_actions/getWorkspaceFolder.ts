@@ -2,12 +2,12 @@
 
 import { prisma } from "@/lib/prisma"
 import { currentUser } from "@clerk/nextjs/server"
-
+export type GetWorkspaceFolderReturnType = Awaited<ReturnType<typeof getWorkspaceFolder>>;
 
  export const getWorkspaceFolder = async (workSpaceId: string) => {
  try {
   const user = await currentUser()
-  if (!user) return { status: 404, data: [], message: "User not found" }
+  if (!user) return { status: 404 as const , data: [], message: "User not found" }
   const workspaceFolder = await prisma.folder.findMany({
    where: {
     workSpaceId
@@ -26,7 +26,7 @@ import { currentUser } from "@clerk/nextjs/server"
  }
  catch (error) {
   console.log(error)
-  return { status: 403, data: [], message: "Error fetching folder" }
+  return { status: 403 as const, data: [], message: "Error fetching folder" }
  }
 
 }

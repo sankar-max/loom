@@ -10,15 +10,15 @@ datasource db {
 model User {
   id           String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email        String         @unique
-  firstname    String?
-  lastname     String?
+  firstName    String?
+  lastName     String?
   createdAt    DateTime       @default(now())
   clerkId      String         @unique
   image        String?
   trial        Boolean        @default(false)
   firstView    Boolean        @default(false)
-  comment      Comment[]
-  reciever     Invite[]       @relation("reciever")
+  comments     Comment[]
+  receiver     Invite[]       @relation("receiver")
   sender       Invite[]       @relation("sender")
   studio       Media?
   members      Member[]
@@ -85,7 +85,7 @@ model Folder {
 
 model Video {
   id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title       String?    @default("Untilted Video")
+  title       String?    @default("Untitled Video")
   description String?    @default("No Description")
   source      String     @unique
   createdAt   DateTime   @default(now())
@@ -95,7 +95,7 @@ model Video {
   workSpaceId String?    @db.Uuid
   views       Int        @default(0)
   summery     String?
-  Comment     Comment[]
+  comments    Comment[]
   Folder      Folder?    @relation(fields: [folderId], references: [id], onDelete: Cascade)
   User        User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
   WorkSpace   WorkSpace? @relation(fields: [workSpaceId], references: [id], onDelete: Cascade)
@@ -121,13 +121,13 @@ model Notification {
 model Invite {
   id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   senderId    String?    @db.Uuid
-  recieverId  String?    @db.Uuid
+  receiverId  String?    @db.Uuid
   content     String
   workSpaceId String?    @db.Uuid
   accepted    Boolean    @default(false)
-  reciever    User?      @relation("reciever", fields: [recieverId], references: [id])
+  receiver    User?      @relation("receiver", fields: [receiverId], references: [id])
   sender      User?      @relation("sender", fields: [senderId], references: [id])
-  WorkSpace   WorkSpace? @relation(fields: [workSpaceId], references: [id])
+  workSpace   WorkSpace? @relation(fields: [workSpaceId], references: [id])
 }
 
 enum Type {
