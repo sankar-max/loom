@@ -11,6 +11,8 @@ import { getUserVideo } from './_actions/getUserVideo'
 import { getUserWorkspace } from './_actions/getUserWorkspace'
 import { getUserNotification } from './_actions/getUserNotification'
 import { Sidebar } from './_components/sidebar'
+import Header from './_components/header'
+import WorkspaceHeader from './_components/workspace-header'
 
 type Props = {
   children: React.ReactNode
@@ -32,7 +34,7 @@ export default async function Layout({
   const verifyWorkspace = await getWorkspace(workspaceId)
 
   if (verifyWorkspace.status !== 200) {
-    redirect(`/dashboard/${user?.workspace[0].id}`)
+   return redirect(`/dashboard/${user?.workspace[0].id}`)
   }
 
   if (!verifyWorkspace.data) {
@@ -56,12 +58,15 @@ export default async function Layout({
     queryKey: ['user-notification', workspaceId],
     queryFn: () => getUserNotification(),
   })
-
   return (
     <HydrationBoundary state={dehydrate(query)}>
-      <div className="flex h-screen gap-x-2 w-screen">
+      <div className="flex h-screen  gap-x-2">
         <Sidebar activeWorkspaceId={workspaceId} />
-        {children}
+        <div className="flex-1 p-5">
+          <Header />
+          <WorkspaceHeader workspaceData={verifyWorkspace.data} />
+          {children}
+        </div>
       </div>
     </HydrationBoundary>
   )

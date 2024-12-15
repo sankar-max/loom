@@ -26,7 +26,7 @@ const Modal = ({ children, trigger, className, title, description }: ModalProps)
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <div className="mt-4">{children}</div>
+        <div className="">{children}</div>
       </DialogContent>
     </Dialog>
   )

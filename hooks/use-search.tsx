@@ -1,12 +1,9 @@
-
-
 import { useEffect, useState } from 'react'
 import { UseLoomQuery } from './useLoomQuery'
 import { getSearchWorkspace } from '@/app/dashboard/[workspaceId]/_actions/getSearchWorkspace'
 
 type UseSearchProps = {
   query: string
-
 }
 export type UseSearchReturnType = Awaited<ReturnType<typeof getSearchWorkspace>>
 export const useSearch = ({ query }: UseSearchProps) => {
@@ -20,12 +17,12 @@ export const useSearch = ({ query }: UseSearchProps) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedSearch(search)
-    }, 500)
+    }, 1000)
     return () => clearTimeout(timeout)
   }, [search])
 
   const { refetch, isLoading, error } = UseLoomQuery({
-    queryKey: [query, debouncedSearch],
+    queryKey: [query],
     queryFn: async () => {
       const response = await getSearchWorkspace(debouncedSearch)
       return setData(response.data)
