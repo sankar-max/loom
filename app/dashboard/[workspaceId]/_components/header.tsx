@@ -17,7 +17,7 @@ export default function Header() {
       </div>
       {/* actions */}
       <div className="flex gap-2">
-        <Button variant="outline" loading={true}>
+        <Button variant="outline">
           <Upload />
           Upload
         </Button>

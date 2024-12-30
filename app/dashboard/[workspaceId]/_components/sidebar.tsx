@@ -13,9 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import Image from 'next/image'
-import Modal from './modal'
-import { PanelLeft, UserRoundPlus } from 'lucide-react'
-import { useSearch } from '@/hooks/use-search'
+import { PanelLeft } from 'lucide-react'
 import SidebarItems from './sidebarItems'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -26,8 +24,7 @@ import {
   CardContent,
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Skeleton } from '@/components/ui/skeleton'
+import { InviteUserModal } from './invite-user.modal'
 // import { useMutationData } from '@/hooks/use-mutation'
 
 type Props = {
@@ -40,14 +37,7 @@ export const Sidebar = ({ activeWorkspaceId }: Props) => {
     queryFn: () => getUserWorkspace(),
   })
 
-  const {
-    data: userData,
-    handleSearch,
-    search,
-    isLoading,
-  } = useSearch({
-    query: 'get-user',
-  })
+
 
   // const {mutate:inviteUser} = useMutationData({
   //   mutationKey:['invite-user'],
@@ -59,7 +49,7 @@ export const Sidebar = ({ activeWorkspaceId }: Props) => {
   const workspacesData = data?.status === 200 ? data.data : null
 
   return (
-    <div className="bg-[#111111] group flex-none relative p-4 h-full w-[250px] flex flex-col gap-10 overflow-hidden ">
+    <div className="bg-[#111111] lg:flex hidden group flex-none relative p-4 h-full w-[250px]  flex-col gap-10 overflow-hidden ">
       {/* logo */}
       <div className="flex text-2xl  items-center justify-between gap-2">
         <div className="flex items-center gap-2">
@@ -100,113 +90,7 @@ export const Sidebar = ({ activeWorkspaceId }: Props) => {
               )}
           </SelectContent>
         </Select>
-        <Modal
-          title="Invite people"
-          trigger={
-            <div className="flex w-full  border border-t-0  rounded-b-md text-sm p-3  gap-2.5 ">
-              <UserRoundPlus className="size-4" />
-              invite people
-            </div>
-          }
-          description="Invite people to your workspace"
-        >
-          <Input
-            type="text"
-            placeholder="Search..."
-            value={search}
-            onChange={handleSearch}
-          />
-          <div className="flex flex-col gap-2 pt-3">
-            {isLoading ? (
-              <div className="flex justify-center items-center">
-                <Skeleton className="w-full h-10" />
-              </div>
-            ) : userData?.length > 0 ? (
-              <div className="flex flex-col h-[150px] overflow-y-auto  gap-2">
-                {userData?.map((item) => (
-                  <div
-                    key={item?.email}
-                    className="flex cursor-pointer p-1 rounded-md hover:bg-neutral-800 items-center gap-2 w-full"
-                  >
-                    <Image
-                      src={item.image || ''}
-                      alt={item.firstName || ''}
-                      width={30}
-                      height={30}
-                      className="rounded-full"
-                    />
-                    {item?.firstName}
-
-                    <span className="text-sm p-1 text-black bg-white rounded-full  ">
-                      {item.subscription?.plan}
-                    </span>
-                  </div>
-                ))}
-                {userData?.map((item) => (
-                  <div
-                    key={item?.email}
-                    className="flex cursor-pointer p-1 rounded-md hover:bg-neutral-800 items-center gap-2 w-full"
-                  >
-                    <Image
-                      src={item.image || ''}
-                      alt={item.firstName || ''}
-                      width={30}
-                      height={30}
-                      className="rounded-full"
-                    />
-                    {item?.firstName}
-
-                    <span className="text-sm p-1 text-black bg-white rounded-full  ">
-                      {item.subscription?.plan}
-                    </span>
-                  </div>
-                ))}
-                {userData?.map((item) => (
-                  <div
-                    key={item?.email}
-                    className="flex cursor-pointer p-1 rounded-md hover:bg-neutral-800 items-center gap-2 w-full"
-                  >
-                    <Image
-                      src={item.image || ''}
-                      alt={item.firstName || ''}
-                      width={30}
-                      height={30}
-                      className="rounded-full"
-                    />
-                    {item?.firstName}
-
-                    <p className="!text-xs p-1 capitalize text-black bg-white rounded-full  ">
-                      {item.subscription?.plan}
-                    </p>
-                  </div>
-                ))}
-                {userData?.map((item) => (
-                  <div
-                    key={item?.email}
-                    className="flex cursor-pointer p-1 rounded-md hover:bg-neutral-800 items-center gap-2 w-full"
-                  >
-                    <Image
-                      src={item.image || ''}
-                      alt={item.firstName || ''}
-                      width={30}
-                      height={30}
-                      className="rounded-full"
-                    />
-                    {item?.firstName}
-
-                    <span className="text-sm p-1 text-black bg-white rounded-full  ">
-                      {item.subscription?.plan}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="flex justify-center items-center">
-                No results found
-              </div>
-            )}
-          </div>
-        </Modal>
+        <InviteUserModal />
       </div>
       <Separator />
 

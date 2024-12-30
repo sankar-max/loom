@@ -1,5 +1,7 @@
-const Loading = () => {
-  return <div>Loading...</div>
+import { Spinner } from "@/components/utility/spinner"
+
+const AuthLoading = () => {
+  return <Spinner />
 }
 
-export default Loading
+export default AuthLoading

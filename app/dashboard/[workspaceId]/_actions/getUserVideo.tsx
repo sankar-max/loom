@@ -14,7 +14,8 @@ export const getUserVideo = async () => {
    where: {
     OR: [
      { workSpaceId: user.id },
-     { folderId: user.id }
+     { folderId: user.id },
+     { workSpaceId: user.id }
     ]
    },
    select: {

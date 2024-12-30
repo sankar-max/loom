@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { ReactQueryProvider } from "@/providers/reactQueryProvider";
 import { DM_Sans } from 'next/font/google'
+
+import { Toaster } from "sonner";
 const font=DM_Sans({
   subsets:["latin"],
   weight:["400","700"],
@@ -25,16 +27,17 @@ export default function RootLayout({
   children,
 }: Readonly<NewType>) {
   return (
+        <ClerkProvider>
     <html lang="en">
       <body className={`antialiased ${font.className}`}>
-        <ClerkProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ReactQueryProvider>
+              <Toaster/>
               {children}
             </ReactQueryProvider>
           </ThemeProvider>
-        </ClerkProvider>
       </body>
     </html>
+        </ClerkProvider>
   );
 }

@@ -46,10 +46,10 @@ export default async function Layout({
     queryKey: ['workspace-folder', workspaceId],
     queryFn: () => getWorkspaceFolder(workspaceId),
   })
-  await query.prefetchQuery({
-    queryKey: ['user-video', workspaceId],
-    queryFn: () => getUserVideo(),
-  })
+  // await query.prefetchQuery({
+  //   queryKey: ['user-video', workspaceId],
+  //   queryFn: () => getUserVideo(),
+  // })
   await query.prefetchQuery({
     queryKey: ['user-workspace', workspaceId],
     queryFn: () => getUserWorkspace(),
