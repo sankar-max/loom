@@ -10,11 +10,8 @@ import { toast } from 'sonner'
 type Args = {
   queryKey: string
   mutationKey: MutationKey
-  mutationFn: MutationFunction<
-    { status: number; data: string } & unknown,
-    unknown
-  >
-  onSuccess: (data: unknown) => void
+  mutationFn: MutationFunction<{ status: number; data: unknown; message: string }, unknown>
+  onSuccess?: (data: unknown) => void
 }
 export const useMutationData = ({
   queryKey,

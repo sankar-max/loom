@@ -7,7 +7,6 @@ import {
   dehydrate,
 } from '@tanstack/react-query'
 import { getWorkspaceFolder } from './_actions/getWorkspaceFolder'
-import { getUserVideo } from './_actions/getUserVideo'
 import { getUserWorkspace } from './_actions/getUserWorkspace'
 import { getUserNotification } from './_actions/getUserNotification'
 import { Sidebar } from './_components/sidebar'
@@ -60,7 +59,7 @@ export default async function Layout({
   })
   return (
     <HydrationBoundary state={dehydrate(query)}>
-      <div className="flex h-screen  gap-x-2">
+      <div className="flex h-screen   gap-x-2">
         <Sidebar activeWorkspaceId={workspaceId} />
         <div className="flex-1 p-5">
           <Header />

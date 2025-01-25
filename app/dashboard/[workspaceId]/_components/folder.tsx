@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { GetWorkspaceFolderReturnType } from '../_actions/getWorkspaceFolder'
-import { FolderIcon, Trash, Trash2Icon } from 'lucide-react'
+import { FolderIcon, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useMutationData } from '@/hooks/use-mutation'
@@ -15,7 +15,7 @@ export const Folder = ({ folder, optimistic = false }: Props) => {
   const { mutate, isPending } = useMutationData({
     mutationKey: ['rename-folder'],
     queryKey: 'workspace-folder',
-    mutationFn: ({ name, folderId }: { name: string; folderId: string }) =>
+    mutationFn: () =>
       renameFolder({
         name: renameValue,
         folderId: folder.id,
@@ -24,15 +24,12 @@ export const Folder = ({ folder, optimistic = false }: Props) => {
   const {
     mutate: deleteMutate,
     isPending: deletePending,
-    isIdle,
   } = useMutationData({
     mutationKey: ['delete-folder'],
     queryKey: 'workspace-folder',
-    mutationFn: ({ folderId }: { folderId: string }) =>
-      deleteFolder({ folderId }),
+    mutationFn: () => deleteFolder({ folderId: folder.id }),
   })
 
-  console.log('folder delete', deletePending)
   const handleRename = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRenameValue(e.target.value)
   }

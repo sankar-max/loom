@@ -13,7 +13,7 @@ export default function Page() {
   const workspaceId = pathname.workspaceId
   console.log(pathname)
 
-  const { mutate , isPending} = useMutationData({
+  const { mutate, isPending } = useMutationData({
     queryKey: 'workspace-folder',
     mutationKey: ['create-folder'],
     mutationFn: async () => {
@@ -21,23 +21,23 @@ export default function Page() {
         name: 'New Folder',
         workspaceId: workspaceId as string,
       })
+
       return response
     },
   })
-    const { data,  } = UseLoomQuery({
+
+  const { data } = UseLoomQuery({
     queryKey: ['workspace-folder'],
     queryFn: () => getWorkspaceFolder(workspaceId as string),
   })
   const { data: FolderData } = data || {}
 
+  const removeAllFolders = FolderData?.map((folder) => folder.id)
 
-const removeAllFolders = FolderData?.map((folder)=> (folder.id))
-
-  const { mutate: deleteMutate, isPending: deletePending } = useMutationData({
+  const { mutate: deleteMutate } = useMutationData({
     mutationKey: ['delete-folder'],
     queryKey: 'workspace-folder',
-    mutationFn: ({ folderId }: { folderId: string[] }) =>
-      deleteFolder({ folderId }),
+    mutationFn: () => deleteFolder({ folderId: removeAllFolders! }),
   })
   return (
     <div className="flex flex-col mt-4 flex-1">
@@ -59,7 +59,14 @@ const removeAllFolders = FolderData?.map((folder)=> (folder.id))
           </TabsList>
 
           <div className="flex items-center gap-2">
-            <Button disabled={isPending} onClick={() => {deleteMutate({folderId:removeAllFolders})}} className="text-sm" variant="outline">
+            <Button
+              disabled={isPending}
+              onClick={() => {
+                deleteMutate({ folderId: removeAllFolders! })
+              }}
+              className="text-sm"
+              variant="outline"
+            >
               <Trash2Icon />
             </Button>
             <Button

@@ -49,9 +49,9 @@ export const Sidebar = ({ activeWorkspaceId }: Props) => {
   const workspacesData = data?.status === 200 ? data.data : null
 
   return (
-    <div className="bg-[#111111] lg:flex hidden group flex-none relative p-4 h-full w-[250px]  flex-col gap-10 overflow-hidden ">
+    <div className="bg-[#111111] lg:flex hidden group flex-none relative p-4 h-full w-[250px]  flex-col gap-10 overflow-y-auto ">
       {/* logo */}
-      <div className="flex text-2xl  items-center justify-between gap-2">
+      <div className="flex text-2xl sticky top-0 bg-[#111111] z-10 items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <Image src={'/logo.svg'} alt="" width={35} height={35} />
           Loom

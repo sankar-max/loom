@@ -15,7 +15,7 @@ export const createNewFolder = async ({
   workspaceId: string
 }) => {
   const user = await currentUser()
-  if (!user) return { status: 404, message: 'User not found' }
+  if (!user) return { status: 404, message: 'User not found',data:null }
 
   const getUserSubscription = await prisma.user.findUnique({
     where: {
@@ -31,7 +31,7 @@ export const createNewFolder = async ({
   })
   const userSubscription = getUserSubscription?.subscription?.plan || 'free'
   if (userSubscription === 'free')
-    return { status: 404, message: 'You are not allowed to create a folder' }
+    return { status: 404, message: 'You are not allowed to create a folder' ,data:null}
   const createFolder = await prisma.workSpace.update({
     where: {
       id: workspaceId,
@@ -56,8 +56,8 @@ export const renameFolder = async ({
   name: string
   folderId: string
 }) => {
-  if (!name) return { status: 404, message: 'Name is required' }
-  if (folderId === '') return { status: 404, message: 'Folder id is required' }
+  if (!name) return { status: 404, message: 'Name is required',data:null }
+  if (folderId === '') return { status: 404, message: 'Folder id is required',data:null }
 
   const updateFolder = await prisma.folder.update({
     where: {
@@ -79,7 +79,7 @@ export const deleteFolder = async ({
 }: {
   folderId: string | string[]
 }) => {
-  if (!folderId) return { status: 404, message: 'Folder id is required' }
+    if (!folderId) return { status: 404, message: 'Folder id is required',data:null }
 
   let deleteFolder
   if (!Array.isArray(folderId)) {
